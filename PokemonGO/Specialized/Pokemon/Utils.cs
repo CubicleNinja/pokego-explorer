@@ -13,6 +13,7 @@ namespace PokemonGO.Specialized.Pokemon
     public static class Utils
     {
         private static readonly DateTime _jan1st1970 = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        public static DateTime UnixEpoch { get { return _jan1st1970; } }
 
         internal static GMarkerGoogle CreateMarker(MapPokemonProto Pokemon)
         {

@@ -21,7 +21,9 @@ namespace PokemonGO
         private delegate void ClearCallback();
         private delegate void MarkerCallback(GMarkerGoogle Marker);
         private delegate void WriteCallback(string Line, bool Date);
-        
+
+        private PokemonGO.Specialized.SQLite.SQLiteLoggerDB pokemonDB;
+
         public Main()
         {
             InitializeComponent();
@@ -31,6 +33,8 @@ namespace PokemonGO
 
         private void InitLogger()
         {
+            pokemonDB = new Specialized.SQLite.SQLiteLoggerDB();
+
             WriteLine("Pokemon GO Explorer");
             WriteLine("Copyright (C) 2016 - W00dL3cs");
             WriteLine();
@@ -162,9 +166,20 @@ namespace PokemonGO
 
                         var Objects = await Client.GetNearbyData();
 
-                        foreach (var Marker in Objects.Pokemons.Select(Specialized.Pokemon.Utils.CreateMarker))
+                        foreach (var pokemon in Objects.Pokemons)
                         {
-                            AddMarker(Marker);
+                            var marker = Specialized.Pokemon.Utils.CreateMarker(pokemon);
+                            AddMarker(marker);
+
+                            if (logToDB.Checked)
+                            {
+                                String pokeID = pokemon.PokedexTypeId.ToString();
+
+                                pokemonDB.AddEntry(Convert.ToInt32(pokeID.Substring(1, 4)),
+                                                                   pokeID.Substring(pokeID.LastIndexOf("Pokemon") + 7),
+                                                                   pokemon.Latitude, pokemon.Longitude,
+                                                                   (pokemon.ExpirationTimeMs > 0) ? PokemonGO.Specialized.Pokemon.Utils.UnixEpoch.AddMilliseconds(pokemon.ExpirationTimeMs).ToLocalTime().ToShortTimeString() : "Never");
+                            }
                         }
 
                         foreach (var Marker in Objects.Forts.Where(Fort => Fort.FortType != 1).Select(Specialized.Forts.Utils.CreateMarker))
@@ -300,6 +315,7 @@ namespace PokemonGO
             Exit_Button.BackgroundImage = Properties.Resources._7a50045ab03c115d698fb9f533f90f1c;
             PokePoke.BackgroundImage = Properties.Resources._7a50045ab03c115d698fb9f533f90f1c;
 
+            logToDB.BackColor = Color.MediumTurquoise;
             MapBorder.BackColor = Color.MediumTurquoise;
             label1.BackColor = Color.MediumTurquoise;
             txtHistory.BackColor = Color.MediumTurquoise;
@@ -313,6 +329,7 @@ namespace PokemonGO
             Exit_Button.BackgroundImage = Properties.Resources.e815a787fb770107c34238b202c40a1c;
             PokePoke.BackgroundImage = Properties.Resources.e815a787fb770107c34238b202c40a1c;
 
+            logToDB.BackColor = Color.Coral;
             MapBorder.BackColor = Color.Coral;
             label1.BackColor = Color.Coral;
             txtHistory.BackColor = Color.Coral;
@@ -326,6 +343,7 @@ namespace PokemonGO
             Exit_Button.BackgroundImage = Properties.Resources.f60536429bb5c705c7427136c92cea84;
             PokePoke.BackgroundImage = Properties.Resources.f60536429bb5c705c7427136c92cea84;
 
+            logToDB.BackColor = Color.LightGreen;
             MapBorder.BackColor = Color.LightGreen;
             label1.BackColor = Color.LightGreen;
             txtHistory.BackColor = Color.LightGreen;

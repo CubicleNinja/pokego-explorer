@@ -41,6 +41,7 @@ namespace PokemonGO
             this.txtHistory = new System.Windows.Forms.TextBox();
             this.btnLogin = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
+            this.logToDB = new System.Windows.Forms.CheckBox();
             this.MapBorder.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -168,7 +169,7 @@ namespace PokemonGO
             this.label1.BackColor = System.Drawing.Color.MediumTurquoise;
             this.label1.Location = new System.Drawing.Point(752, 543);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 17);
+            this.label1.Size = new System.Drawing.Size(186, 13);
             this.label1.TabIndex = 23;
             this.label1.Text = "Theme Added By /u/Sodanakin";
             this.label1.Visible = false;
@@ -206,12 +207,26 @@ namespace PokemonGO
             this.btnPause.UseVisualStyleBackColor = false;
             this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
+            // logToDB
+            // 
+            this.logToDB.AutoSize = true;
+            this.logToDB.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.logToDB.Checked = true;
+            this.logToDB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.logToDB.Location = new System.Drawing.Point(760, 8);
+            this.logToDB.Name = "logToDB";
+            this.logToDB.Size = new System.Drawing.Size(139, 17);
+            this.logToDB.TabIndex = 29;
+            this.logToDB.Text = "Log Pokemon to DB";
+            this.logToDB.UseVisualStyleBackColor = false;
+            // 
             // Main
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::PokemonGO.Properties.Resources._7a50045ab03c115d698fb9f533f90f1c;
             this.ClientSize = new System.Drawing.Size(1108, 572);
+            this.Controls.Add(this.logToDB);
             this.Controls.Add(this.btnPause);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.txtHistory);
@@ -247,6 +262,7 @@ namespace PokemonGO
         private System.Windows.Forms.TextBox txtHistory;
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnPause;
+        private System.Windows.Forms.CheckBox logToDB;
     }
 
 }
